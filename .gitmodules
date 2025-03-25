@@ -1,3 +1,6 @@
 [submodule "frontend"]
 	path = frontend
 	url = git@github.com:Ceball0s/OfertaYa-frontend.git
+[submodule "Microservicio-Subasta"]
+	path = Microservicio-Subasta
+	url = git@github.com:Ceball0s/Microservicio-Subasta.git
