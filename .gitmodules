@@ -7,3 +7,6 @@
 [submodule "Microservicio-Autenticacion"]
 	path = Microservicio-Autenticacion
 	url = git@github.com:Ceball0s/Microservicio-Autenticacion.git
+[submodule "Microservicio-Oferta"]
+	path = Microservicio-Oferta
+	url = git@github.com:cristhianleonardo/Microservicio-Oferta.git
