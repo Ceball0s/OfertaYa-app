@@ -17,3 +17,4 @@
 [submodule "Microservicio-Chat"]
 	path = Microservicio-Chat
 	url = git@github.com:cristhianleonardo/Microservicio-Chat.git
+	branch = main
