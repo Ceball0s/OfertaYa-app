@@ -1,0 +1,81 @@
+version: '3.8'
+
+services:
+  eureka-server:
+    build: ./eureka-server
+    container_name: eureka_server
+    ports:
+      - "8761:8761"
+    networks:
+      - ofertaya_net
+    environment:
+      - SPRING_APPLICATION_NAME=eureka-server
+      - SERVER_PORT=8761
+      - EUREKA_CLIENT_REGISTER_WITH_EUREKA=false
+      - EUREKA_CLIENT_FETCH_REGISTRY=false
+
+  subasta-service:
+    build: ./Microservicio-Subasta
+    container_name: ofertaya_subasta_app
+    depends_on:
+      - eureka-server
+      - db_subasta
+    ports:
+      - "8081:8081"
+    environment:
+      DB_URL: jdbc:postgresql://db_subasta:5432/ofertaya-subasta
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka
+    networks:
+      - ofertaya_net
+
+  oferta_service:
+    build: ./Microservicio-Oferta
+    container_name: ofertaya_oferta_app
+    depends_on:
+      - db_ofertas
+      - eureka-server
+    ports:
+      - "8082:8082"
+    environment:
+      DB_URL: jdbc:postgresql://db_ofertas:5432/ofertaya-oferta
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+    networks:
+      - ofertaya_net
+
+  db_subasta:
+    image: postgres:16
+    container_name: subasta_db
+    environment:
+      POSTGRES_DB: ofertaya-subasta
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - subasta_data:/var/lib/postgresql/data
+    networks:
+      - ofertaya_net
+
+  db_ofertas:
+    image: postgres:16
+    container_name: ofertaya_oferta_db
+    environment:
+      POSTGRES_DB: ofertaya-oferta
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    #ports:
+    #   - "5432:5432"
+    volumes:
+      - ofertas_data:/var/lib/postgresql/data
+    networks:
+      - ofertaya_net
+
+  
+
+volumes:
+  subasta_data:
+  ofertas_data:
+
+networks:
+  ofertaya_net:
