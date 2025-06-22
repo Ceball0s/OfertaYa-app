@@ -26,3 +26,7 @@
 	path = Microservicio_Monitoreo
 	url = https://github.com/NyC0lS/Microservicio_Monitoreo.git
 	branch = main
+[submodule "Microservicio-Pedido_Rastreo"]
+	path = Microservicio-Pedido_Rastreo
+	url = https://github.com/Ceball0s/Microservicio-Pedido_Rastreo.git
+	branch = main
