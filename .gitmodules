@@ -30,3 +30,7 @@
 	path = Microservicio-Pedido_Rastreo
 	url = https://github.com/Ceball0s/Microservicio-Pedido_Rastreo.git
 	branch = main
+[submodule "Microservicio-ApiGateway"]
+	path = Microservicio-ApiGateway
+	url = https://github.com/Ceball0s/Microservicio-ApiGateway.git
+	branch = main
