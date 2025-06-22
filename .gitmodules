@@ -1,19 +1,28 @@
 [submodule "frontend"]
 	path = frontend
-	url = git@github.com:Ceball0s/OfertaYa-frontend.git
+	url = https://github.com/Ceball0s/OfertaYa-frontend.git
 	branch = main
 [submodule "Microservicio-Subasta"]
 	path = Microservicio-Subasta
-	url = git@github.com:Ceball0s/Microservicio-Subasta.git
+	url = https://github.com/Ceball0s/Microservicio-Subasta.git
 	branch = main
 [submodule "Microservicio-Autenticacion"]
 	path = Microservicio-Autenticacion
-	url = git@github.com:Ceball0s/Microservicio-Autenticacion.git
+	url = https://github.com/Ceball0s/Microservicio-Autenticacion.git
 	branch = main
 [submodule "Microservicio-Oferta"]
 	path = Microservicio-Oferta
-	url = git@github.com:cristhianleonardo/Microservicio-Oferta.git
+	url = https://github.com/cristhianleonardo/Microservicio-Oferta.git
 	branch = main
 [submodule "Microservicio-Chat"]
 	path = Microservicio-Chat
-	url = git@github.com:cristhianleonardo/Microservicio-Chat.git
+	url = https://github.com/cristhianleonardo/Microservicio-Chat.git
+	branch = main
+[submodule "Microservicio-Eureka"]
+	path = Microservicio-Eureka
+	url = https://github.com/Ceball0s/Microservicio-Eureka.git
+	branch = main
+[submodule "Microservicio_Monitoreo"]
+	path = Microservicio_Monitoreo
+	url = https://github.com/NyC0lS/Microservicio_Monitoreo.git
+	branch = main
