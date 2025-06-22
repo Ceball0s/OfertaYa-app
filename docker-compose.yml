@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   eureka-server:
-    build: ./eureka-server
+    build: ./Microservicio-Eureka
     container_name: eureka_server
     ports:
       - "8761:8761"
@@ -45,6 +45,35 @@ services:
     networks:
       - ofertaya_net
 
+  pedidos_service:
+    build: ./Microservicio-Pedido_Rastreo
+    container_name: ofertaya_Pedido_app
+    depends_on:
+      - db_pedidos
+      - eureka-server
+    ports:
+      - "8083:8083"
+    environment:
+      DB_URL: jdbc:postgresql://db_pedidos:5432/ofertaya-pedidos
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+    networks:
+      - ofertaya_net
+
+
+
+  db_pedidos:
+    image: postgres:16
+    container_name: pedidos_db
+    environment:
+      POSTGRES_DB: ofertaya-pedidos
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - pedidos_data:/var/lib/postgresql/data
+    networks:
+      - ofertaya_net
+
   db_subasta:
     image: postgres:16
     container_name: subasta_db
@@ -76,6 +105,7 @@ services:
 volumes:
   subasta_data:
   ofertas_data:
+  pedidos_data:
 
 networks:
   ofertaya_net:
