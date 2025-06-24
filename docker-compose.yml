@@ -91,6 +91,22 @@ services:
     networks:
       - ofertaya_net
 
+  chat-service:
+    build: ./Microservicio-Chat
+    container_name: ofertaya_chat_app
+    depends_on:
+      - eureka-server
+      - db_chat
+    ports:
+      - "8086:8086"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db_chat:5432/chat_db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka
+    networks:
+      - ofertaya_net
+
   # ==================== SERVICIOS DE MONITOREO ====================
 
   # Microservicio de Monitoreo
@@ -247,6 +263,18 @@ services:
     networks:
       - ofertaya_net
 
+  db_chat:
+    image: postgres:16
+    container_name: chat_db
+    environment:
+      POSTGRES_DB: chat_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - chat_data:/var/lib/postgresql/data
+    networks:
+      - ofertaya_net
+
   # Base de datos para monitoreo
   db_monitoreo:
     image: postgres:15
@@ -271,6 +299,7 @@ volumes:
   ofertas_data:
   pedidos_data:
   auth_data:
+  chat_data:
   monitoreo_data:
   prometheus_data:
   loki_data:
