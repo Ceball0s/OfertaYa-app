@@ -96,7 +96,7 @@ services:
   # Microservicio de Monitoreo
   monitoreo-service:
     build:
-      context: ./Microservicio_Monitoreo/monitoreo
+      context: ./Microservicio_Monitoreo
       dockerfile: Dockerfile
     container_name: ofertaya_monitoreo_app
     ports:
