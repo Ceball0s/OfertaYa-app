@@ -1,0 +1,927 @@
+{
+	"info": {
+		"_postman_id": "oferta-ya-microservicios-directos",
+		"name": "OfertaYa - Microservicios Directos",
+		"description": "Colección completa de endpoints para acceder directamente a cada microservicio de OfertaYa. Cada servicio tiene su propia URL base configurada.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "12345678"
+	},
+	"variable": [
+		{
+			"key": "auth_url",
+			"value": "http://34.176.164.146:9004",
+			"type": "string"
+		},
+		{
+			"key": "subasta_url",
+			"value": "http://34.176.164.146:9001",
+			"type": "string"
+		},
+		{
+			"key": "oferta_url",
+			"value": "http://34.176.164.146:9002",
+			"type": "string"
+		},
+		{
+			"key": "chat_url",
+			"value": "http://34.176.164.146:9003",
+			"type": "string"
+		},
+		{
+			"key": "pedido_url",
+			"value": "http://34.176.164.146:9005",
+			"type": "string"
+		},
+		{
+			"key": "monitoreo_url",
+			"value": "http://34.176.164.146:9006",
+			"type": "string"
+		},
+		{
+			"key": "gateway_url",
+			"value": "http://34.176.164.146:9000",
+			"type": "string"
+		},
+		{
+			"key": "usuario_id",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "subasta_id",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "oferta_id",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "tracking_id",
+			"value": "PED-0001",
+			"type": "string"
+		},
+		{
+			"key": "evento_id",
+			"value": "1",
+			"type": "string"
+		}
+	],
+	"item": [
+		{
+			"name": "🔐 Autenticación (Puerto 9004)",
+			"item": [
+				{
+					"name": "Registrar Usuario",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\": \"Juan Pérez\",\n    \"email\": \"juan.perez@email.com\",\n    \"password\": \"password123\"\n}"
+						},
+						"url": {
+							"raw": "{{auth_url}}/api/auth/register",
+							"host": [
+								"{{auth_url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"register"
+							]
+						},
+						"description": "Registra un nuevo usuario en el sistema"
+					},
+					"response": []
+				},
+				{
+					"name": "Login Usuario",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"juan.perez@email.com\",\n    \"password\": \"password123\"\n}"
+						},
+						"url": {
+							"raw": "{{auth_url}}/api/auth/login",
+							"host": [
+								"{{auth_url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						},
+						"description": "Autentica un usuario y retorna un token JWT"
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoints para autenticación y registro de usuarios (Puerto 9004)"
+		},
+		{
+			"name": "🏷️ Subastas (Puerto 9001)",
+			"item": [
+				{
+					"name": "Crear Subasta",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "user-id",
+								"value": "{{usuario_id}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\": \"iPhone 15 Pro Max\",\n    \"descripcion\": \"iPhone 15 Pro Max en excelente estado\",\n    \"precioInicial\": 1500.00,\n    \"aumentoMinimo\": 50.00,\n    \"fechaCierre\": \"2025-06-26T19:00:00.000Z\"\n}"
+						},
+						"url": {
+							"raw": "{{subasta_url}}/api/subasta/agregar",
+							"host": [
+								"{{subasta_url}}"
+							],
+							"path": [
+								"api",
+								"subasta",
+								"agregar"
+							]
+						},
+						"description": "Crea una nueva subasta"
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar Subasta por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{subasta_url}}/api/subasta/{{subasta_id}}",
+							"host": [
+								"{{subasta_url}}"
+							],
+							"path": [
+								"api",
+								"subasta",
+								"{{subasta_id}}"
+							]
+						},
+						"description": "Obtiene los detalles de una subasta específica"
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Todas las Subastas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{subasta_url}}/api/subasta/listar",
+							"host": [
+								"{{subasta_url}}"
+							],
+							"path": [
+								"api",
+								"subasta",
+								"listar"
+							]
+						},
+						"description": "Obtiene todas las subastas disponibles"
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener Recomendaciones",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "user-id",
+								"value": "{{usuario_id}}"
+							}
+						],
+						"url": {
+							"raw": "{{subasta_url}}/api/subasta/recomendaciones",
+							"host": [
+								"{{subasta_url}}"
+							],
+							"path": [
+								"api",
+								"subasta",
+								"recomendaciones"
+							]
+						},
+						"description": "Obtiene recomendaciones personalizadas de subastas"
+					},
+					"response": []
+				},
+				{
+					"name": "Modificar Subasta",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "user-id",
+								"value": "{{usuario_id}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\": \"iPhone 15 Pro Max - Actualizado\",\n    \"descripcion\": \"iPhone 15 Pro Max en excelente estado - Descripción actualizada\",\n    \"precioInicial\": 1600.00,\n    \"aumentoMinimo\": 75.00,\n    \"fechaCierre\": \"2025-06-28T19:00:00.000Z\"\n}"
+						},
+						"url": {
+							"raw": "{{subasta_url}}/api/subasta/{{subasta_id}}",
+							"host": [
+								"{{subasta_url}}"
+							],
+							"path": [
+								"api",
+								"subasta",
+								"{{subasta_id}}"
+							]
+						},
+						"description": "Modifica una subasta existente"
+					},
+					"response": []
+				},
+				{
+					"name": "Finalizar Subasta",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "user-id",
+								"value": "{{usuario_id}}"
+							}
+						],
+						"url": {
+							"raw": "{{subasta_url}}/api/subasta/finalizar/{{subasta_id}}",
+							"host": [
+								"{{subasta_url}}"
+							],
+							"path": [
+								"api",
+								"subasta",
+								"finalizar",
+								"{{subasta_id}}"
+							]
+						},
+						"description": "Finaliza una subasta activa"
+					},
+					"response": []
+				},
+				{
+					"name": "Cancelar Subasta",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "user-id",
+								"value": "{{usuario_id}}"
+							}
+						],
+						"url": {
+							"raw": "{{subasta_url}}/api/subasta/cancelar/{{subasta_id}}",
+							"host": [
+								"{{subasta_url}}"
+							],
+							"path": [
+								"api",
+								"subasta",
+								"cancelar",
+								"{{subasta_id}}"
+							]
+						},
+						"description": "Cancela una subasta activa"
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener Subastas por Usuario",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "user-id",
+								"value": "{{usuario_id}}"
+							}
+						],
+						"url": {
+							"raw": "{{subasta_url}}/api/subasta/usuario",
+							"host": [
+								"{{subasta_url}}"
+							],
+							"path": [
+								"api",
+								"subasta",
+								"usuario"
+							]
+						},
+						"description": "Obtiene todas las subastas de un usuario específico"
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoints para gestión de subastas (Puerto 9001)"
+		},
+		{
+			"name": "💰 Ofertas (Puerto 9002)",
+			"item": [
+				{
+					"name": "Crear Oferta",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "user-id",
+								"value": "{{usuario_id}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"subastaId\": 2,\n    \"monto\": 1350.00\n}"
+						},
+						"url": {
+							"raw": "{{oferta_url}}/api/ofertas/crear",
+							"host": [
+								"{{oferta_url}}"
+							],
+							"path": [
+								"api",
+								"ofertas",
+								"crear"
+							]
+						},
+						"description": "Crea una nueva oferta para una subasta"
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener Oferta por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{oferta_url}}/api/ofertas/{{oferta_id}}",
+							"host": [
+								"{{oferta_url}}"
+							],
+							"path": [
+								"api",
+								"ofertas",
+								"{{oferta_id}}"
+							]
+						},
+						"description": "Obtiene los detalles de una oferta específica"
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener Ofertas por Usuario",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "user-id",
+								"value": "{{usuario_id}}"
+							}
+						],
+						"url": {
+							"raw": "{{oferta_url}}/api/ofertas/usuario",
+							"host": [
+								"{{oferta_url}}"
+							],
+							"path": [
+								"api",
+								"ofertas",
+								"usuario"
+							]
+						},
+						"description": "Obtiene todas las ofertas realizadas por un usuario"
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener Ofertas por Subasta",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{oferta_url}}/api/ofertas/subasta/{{subasta_id}}",
+							"host": [
+								"{{oferta_url}}"
+							],
+							"path": [
+								"api",
+								"ofertas",
+								"subasta",
+								"{{subasta_id}}"
+							]
+						},
+						"description": "Obtiene todas las ofertas de una subasta específica"
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener Mejor Oferta por Subasta",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{oferta_url}}/api/ofertas/subasta/mejor/{{subasta_id}}",
+							"host": [
+								"{{oferta_url}}"
+							],
+							"path": [
+								"api",
+								"ofertas",
+								"subasta",
+								"mejor",
+								"{{subasta_id}}"
+							]
+						},
+						"description": "Obtiene la mejor oferta de una subasta específica"
+					},
+					"response": []
+				},
+				{
+					"name": "Cancelar Oferta",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "user-id",
+								"value": "{{usuario_id}}"
+							}
+						],
+						"url": {
+							"raw": "{{oferta_url}}/api/ofertas/cancelar/{{oferta_id}}",
+							"host": [
+								"{{oferta_url}}"
+							],
+							"path": [
+								"api",
+								"ofertas",
+								"cancelar",
+								"{{oferta_id}}"
+							]
+						},
+						"description": "Cancela una oferta específica"
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoints para gestión de ofertas (Puerto 9002)"
+		},
+		{
+			"name": "📦 Pedidos y Rastreo (Puerto 9005)",
+			"item": [
+				{
+					"name": "Crear Pedido",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"idComprador\": 1,\n    \"idVendedor\": 2,\n    \"nombreProducto\": \"iPhone 15 Pro Max\",\n    \"descripcionProducto\": \"iPhone 15 Pro Max en excelente estado\",\n    \"precioFinal\": 1550.00\n}"
+						},
+						"url": {
+							"raw": "{{pedido_url}}/api/pedidos/crear",
+							"host": [
+								"{{pedido_url}}"
+							],
+							"path": [
+								"api",
+								"pedidos",
+								"crear"
+							]
+						},
+						"description": "Crea un nuevo pedido"
+					},
+					"response": []
+				},
+				{
+					"name": "Rastrear Pedido",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{pedido_url}}/api/pedidos/rastrear/{{tracking_id}}",
+							"host": [
+								"{{pedido_url}}"
+							],
+							"path": [
+								"api",
+								"pedidos",
+								"rastrear",
+								"{{tracking_id}}"
+							]
+						},
+						"description": "Consulta el estado de un pedido por su tracking ID"
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Pedidos de Usuario",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{pedido_url}}/api/pedidos/usuario/{{usuario_id}}",
+							"host": [
+								"{{pedido_url}}"
+							],
+							"path": [
+								"api",
+								"pedidos",
+								"usuario",
+								"{{usuario_id}}"
+							]
+						},
+						"description": "Obtiene todos los pedidos de un usuario específico"
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoints para gestión de pedidos y rastreo (Puerto 9005)"
+		},
+		{
+			"name": "💬 Chat (Puerto 9003)",
+			"item": [
+				{
+					"name": "Crear Sala de Chat",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-User-Id",
+								"value": "{{usuario_id}}"
+							}
+						],
+						"url": {
+							"raw": "{{chat_url}}/api/chat/room",
+							"host": [
+								"{{chat_url}}"
+							],
+							"path": [
+								"api",
+								"chat",
+								"room"
+							]
+						},
+						"description": "Crea una nueva sala de chat"
+					},
+					"response": []
+				},
+				{
+					"name": "Enviar Mensaje",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-User-Id",
+								"value": "{{usuario_id}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"roomId\": \"room123\",\n    \"message\": \"Hola, ¿está disponible el producto?\"\n}"
+						},
+						"url": {
+							"raw": "{{chat_url}}/api/chat/message",
+							"host": [
+								"{{chat_url}}"
+							],
+							"path": [
+								"api",
+								"chat",
+								"message"
+							]
+						},
+						"description": "Envía un mensaje en una sala de chat"
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener Historial de Chat",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-User-Id",
+								"value": "{{usuario_id}}"
+							}
+						],
+						"url": {
+							"raw": "{{chat_url}}/api/chat/history/room123",
+							"host": [
+								"{{chat_url}}"
+							],
+							"path": [
+								"api",
+								"chat",
+								"history",
+								"room123"
+							]
+						},
+						"description": "Obtiene el historial de mensajes de una sala de chat"
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoints para el sistema de chat (Puerto 9003)"
+		},
+		{
+			"name": "📊 Monitoreo (Puerto 9006)",
+			"item": [
+				{
+					"name": "Health Check",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{monitoreo_url}}/api/monitoreo/health",
+							"host": [
+								"{{monitoreo_url}}"
+							],
+							"path": [
+								"api",
+								"monitoreo",
+								"health"
+							]
+						},
+						"description": "Verifica el estado de salud del microservicio de monitoreo"
+					},
+					"response": []
+				},
+				{
+					"name": "Información del Servicio",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{monitoreo_url}}/api/monitoreo/info",
+							"host": [
+								"{{monitoreo_url}}"
+							],
+							"path": [
+								"api",
+								"monitoreo",
+								"info"
+							]
+						},
+						"description": "Obtiene información general del microservicio de monitoreo"
+					},
+					"response": []
+				},
+				{
+					"name": "Prueba de Logging",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{monitoreo_url}}/api/test/logging/basic",
+							"host": [
+								"{{monitoreo_url}}"
+							],
+							"path": [
+								"api",
+								"test",
+								"logging",
+								"basic"
+							]
+						},
+						"description": "Endpoint de prueba para verificar que el servicio esté funcionando"
+					},
+					"response": []
+				},
+				{
+					"name": "Crear Evento de Monitoreo",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"eventType\": \"USER_LOGIN\",\n    \"message\": \"Usuario autenticado exitosamente\",\n    \"level\": \"INFO\",\n    \"userId\": \"1\",\n    \"metadata\": {\n        \"ip\": \"192.168.1.1\",\n        \"userAgent\": \"Mozilla/5.0...\"\n    }\n}"
+						},
+						"url": {
+							"raw": "{{monitoreo_url}}/api/monitoreo/eventos",
+							"host": [
+								"{{monitoreo_url}}"
+							],
+							"path": [
+								"api",
+								"monitoreo",
+								"eventos"
+							]
+						},
+						"description": "Crea un nuevo evento de monitoreo"
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener Evento por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{monitoreo_url}}/api/monitoreo/eventos/{{evento_id}}",
+							"host": [
+								"{{monitoreo_url}}"
+							],
+							"path": [
+								"api",
+								"monitoreo",
+								"eventos",
+								"{{evento_id}}"
+							]
+						},
+						"description": "Obtiene un evento específico por su ID"
+					},
+					"response": []
+				},
+				{
+					"name": "Métricas Personalizadas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{monitoreo_url}}/api/metrics/custom",
+							"host": [
+								"{{monitoreo_url}}"
+							],
+							"path": [
+								"api",
+								"metrics",
+								"custom"
+							]
+						},
+						"description": "Obtiene métricas personalizadas del sistema"
+					},
+					"response": []
+				},
+				{
+					"name": "Resumen de Métricas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{monitoreo_url}}/api/metrics/summary",
+							"host": [
+								"{{monitoreo_url}}"
+							],
+							"path": [
+								"api",
+								"metrics",
+								"summary"
+							]
+						},
+						"description": "Obtiene un resumen de métricas disponibles"
+					},
+					"response": []
+				},
+				{
+					"name": "Información de Métricas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{monitoreo_url}}/api/metrics/info",
+							"host": [
+								"{{monitoreo_url}}"
+							],
+							"path": [
+								"api",
+								"metrics",
+								"info"
+							]
+						},
+						"description": "Obtiene información sobre las métricas disponibles"
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoints para monitoreo y métricas del sistema (Puerto 9006)"
+		},
+		{
+			"name": "🌐 API Gateway (Puerto 9000)",
+			"item": [
+				{
+					"name": "Health Check Gateway",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{gateway_url}}/actuator/health",
+							"host": [
+								"{{gateway_url}}"
+							],
+							"path": [
+								"actuator",
+								"health"
+							]
+						},
+						"description": "Verifica el estado de salud del API Gateway"
+					},
+					"response": []
+				},
+				{
+					"name": "Info Gateway",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{gateway_url}}/actuator/info",
+							"host": [
+								"{{gateway_url}}"
+							],
+							"path": [
+								"actuator",
+								"info"
+							]
+						},
+						"description": "Obtiene información del API Gateway"
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoints del API Gateway (Puerto 9000)"
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"console.log('Request: ' + pm.request.method + ' ' + pm.request.url);"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"// Validar respuesta exitosa",
+					"pm.test('Status code is 200 or 201', function () {",
+					"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+					"});",
+					"",
+					"// Guardar token JWT si es login",
+					"if (pm.request.url.path.includes('login') && pm.response.code === 200) {",
+					"    const responseJson = pm.response.json();",
+					"    if (responseJson.token) {",
+					"        pm.environment.set('jwt_token', responseJson.token);",
+					"        console.log('Token JWT guardado');",
+					"    }",
+					"}",
+					"",
+					"// Log informativo",
+					"console.log('Response: ' + pm.response.status + ' - ' + pm.response.statusText);"
+				]
+			}
+		}
+	]
+} 

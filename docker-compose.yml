@@ -1,6 +1,6 @@
 services:
   eureka-server:
-    build: ./Microservicio-Eureka
+    image: cristhian222/ofertaya-eureka-server:latest
     container_name: eureka_server
     ports:
       - "8761:8761"
@@ -14,12 +14,12 @@ services:
   
 
   gateway-service:
-    build: ./Microservicio-ApiGateway
+    image: cristhian222/ofertaya-gateway-service:latest
     container_name: ofertaya_gateway_app
     depends_on:
       - eureka-server
     ports:
-      - "8080:8080"
+      - "9000:8080"
     environment:
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka
     networks:
@@ -30,13 +30,13 @@ services:
 
 
   subasta-service:
-    build: ./Microservicio-Subasta
+    image: cristhian222/ofertaya-subasta-service:latest
     container_name: ofertaya_subasta_app
     depends_on:
       - eureka-server
       - db_subasta
     ports:
-      - "8081:8081"
+      - "9001:8081"
     environment:
       DB_URL: jdbc:postgresql://db_subasta:5432/ofertaya-subasta
       DB_USERNAME: postgres
@@ -45,44 +45,46 @@ services:
     networks:
       - ofertaya_net
 
-  oferta_service:
-    build: ./Microservicio-Oferta
+  oferta-service:
+    image: cristhian222/ofertaya-oferta-service:latest
     container_name: ofertaya_oferta_app
     depends_on:
       - db_ofertas
       - eureka-server
     ports:
-      - "8082:8082"
+      - "9002:8082"
     environment:
       DB_URL: jdbc:postgresql://db_ofertas:5432/ofertaya-oferta
       DB_USERNAME: postgres
       DB_PASSWORD: postgres
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka
     networks:
       - ofertaya_net
 
-  pedidos_service:
-    build: ./Microservicio-Pedido_Rastreo
-    container_name: ofertaya_Pedido_app
+  pedidos-service:
+    image: cristhian222/ofertaya-pedidos-service:latest
+    container_name: ofertaya_pedido_app
     depends_on:
       - db_pedidos
       - eureka-server
     ports:
-      - "8083:8083"
+      - "9003:8083"
     environment:
       DB_URL: jdbc:postgresql://db_pedidos:5432/ofertaya-pedidos
       DB_USERNAME: postgres
       DB_PASSWORD: postgres
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka
     networks:
       - ofertaya_net
 
   auth-service:
-    build: ./Microservicio-Autenticacion
+    image: cristhian222/ofertaya-auth-service:latest
     container_name: ofertaya_auth_app
     depends_on:
       - eureka-server
       - db_auth
     ports:
-      - "8084:8084"
+      - "9004:8084"
     environment:
       DB_URL: jdbc:postgresql://db_auth:5432/ofertaya-auth
       DB_USERNAME: postgres
@@ -92,13 +94,13 @@ services:
       - ofertaya_net
 
   chat-service:
-    build: ./Microservicio-Chat
+    image: cristhian222/ofertaya-chat-service:latest
     container_name: ofertaya_chat_app
     depends_on:
       - eureka-server
       - db_chat
     ports:
-      - "8086:8086"
+      - "9006:8086"
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://db_chat:5432/chat_db
       SPRING_DATASOURCE_USERNAME: postgres
@@ -111,12 +113,10 @@ services:
 
   # Microservicio de Monitoreo
   monitoreo-service:
-    build:
-      context: ./Microservicio_Monitoreo
-      dockerfile: Dockerfile
+    image: cristhian222/ofertaya-monitoreo-service:latest
     container_name: ofertaya_monitoreo_app
     ports:
-      - "8085:8080"
+      - "9005:8080"
     environment:
       SPRING_PROFILES_ACTIVE: docker
       SPRING_DATASOURCE_URL: jdbc:postgresql://db_monitoreo:5432/monitoreo_db
